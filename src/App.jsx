@@ -9,7 +9,7 @@ import { mainContext } from "./contexts/mainContext";
 import Header from "./components/Header";
 import { useState } from "react";
 function App() {
-  let [activeLink, setActiveLink] = useState(true);
+  let [activeLink, setActiveLink] = useState(false);
   let [category, setCategory] = useState("New");
   return (
     <mainContext.Provider
@@ -20,7 +20,7 @@ function App() {
         setCategory,
       }}
     >
-      <div className="bg-black">
+      <div className="bg-black h-screen overflow-hidden">
         <Header />
 
         <div>

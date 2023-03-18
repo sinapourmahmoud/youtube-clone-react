@@ -1,13 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { mainContext } from "../contexts/mainContext";
 import Sidebar from "./../components/Sidebar";
 import { fetchFromAPI } from "./../utils/fetchFromAPI";
+import Video from "./../components/Video";
 export default function Feed() {
   let { category } = useContext(mainContext);
+  let [videos, setVideos] = useState([]);
   useEffect(() => {
     fetchFromAPI(`search?part=snippet&q=${category}`)
       .then((res) => {
         console.log(res.items);
+        setVideos(res?.items);
       })
       .catch((err) => {
         console.log(err.message);
@@ -23,10 +26,15 @@ export default function Feed() {
       >
         <Sidebar />
       </div>
-      <div className="flex-2 h-screen w-full bg-black text-white py-3 px-2 md:px-4">
+      <div className="flex-2 h-screen w-full overflow-auto pb-6 bg-black text-white pt-3 px-2 md:px-4">
         <p className="text-3xl font-bold">
-          New <span className="text-[rgb(255,0,0)]">Videos</span>
+          {category} <span className="text-[rgb(255,0,0)]">Videos</span>
         </p>
+        <div className="mt-4 flex flex-wrap gap-3 justify-center md:justify-start">
+          {videos?.map((item, index) => (
+            <Video key={index} video={item} />
+          ))}
+        </div>
       </div>
     </div>
   );
