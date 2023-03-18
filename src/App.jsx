@@ -10,11 +10,14 @@ import Header from "./components/Header";
 import { useState } from "react";
 function App() {
   let [activeLink, setActiveLink] = useState(true);
+  let [category, setCategory] = useState("New");
   return (
     <mainContext.Provider
       value={{
         activeLink,
         setActiveLink,
+        category,
+        setCategory,
       }}
     >
       <div className="bg-black">

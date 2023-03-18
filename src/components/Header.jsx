@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { logo } from "./../utils/constants";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
-
+import MenuIcon from "@mui/icons-material/Menu";
+import { mainContext } from "../contexts/mainContext";
 export default function Header() {
+  let { setActiveLink } = useContext(mainContext);
   let [search, setSearch] = useState("");
   return (
     <div className="bg-black px-4 py-1  flex items-center  justify-between">
-      <img src={logo} alt="logo" className="w-[50px] object-contain mt-2" />
+      <img
+        src={logo}
+        alt="logo"
+        className="w-[50px] object-contain mt-2 hidden md:block"
+      />
+      <span
+        onClick={() => setActiveLink((prev) => !prev)}
+        className="md:hidden"
+      >
+        <MenuIcon className="text-white cursor-pointer  " />
+      </span>
       <form>
         <div className="flex items-center bg-white rounded-3xl">
           <input
