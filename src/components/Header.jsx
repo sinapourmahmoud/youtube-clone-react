@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 import { logo } from "./../utils/constants";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { mainContext } from "../contexts/mainContext";
 export default function Header() {
+  let navigate = useNavigate();
   let { setActiveLink } = useContext(mainContext);
   let [search, setSearch] = useState("");
   return (
@@ -20,7 +21,11 @@ export default function Header() {
       >
         <MenuIcon className="text-white cursor-pointer  " />
       </span>
-      <form>
+      <form
+        onSubmit={() => {
+          navigate(`/search/${search}`);
+        }}
+      >
         <div className="flex items-center bg-white rounded-3xl">
           <input
             type="text"

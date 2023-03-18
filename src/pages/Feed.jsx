@@ -32,7 +32,7 @@ export default function Feed() {
         </p>
         <div className="mt-4 flex flex-wrap gap-3 justify-center md:justify-start">
           {videos?.map((item, index) => (
-            <Video key={index} video={item} />
+            <Video key={index} item={item} />
           ))}
         </div>
       </div>
