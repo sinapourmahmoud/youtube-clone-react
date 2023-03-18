@@ -7,9 +7,16 @@ import { Routes, Route } from "react-router-dom";
 
 import { mainContext } from "./contexts/mainContext";
 import Header from "./components/Header";
+import { useState } from "react";
 function App() {
+  let [activeLink, setActiveLink] = useState(true);
   return (
-    <mainContext.Provider value={{}}>
+    <mainContext.Provider
+      value={{
+        activeLink,
+        setActiveLink,
+      }}
+    >
       <div className="bg-black">
         <Header />
 
