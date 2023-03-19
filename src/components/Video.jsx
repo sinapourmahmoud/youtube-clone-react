@@ -15,7 +15,7 @@ export default function Video({ item }) {
     <div className="w-[250px] min-h-[250px]   rounded-lg cursor-pointer">
       {item.id.kind == "youtube#video" ? (
         <Link
-          className="w-full h-full flex flex-col bg-[#1E1E1E]"
+          className="w-full h-full flex flex-col rounded-lg bg-[#1E1E1E]"
           to={`/video/${item.id.videoId || demoVideoUrl}`}
         >
           <img

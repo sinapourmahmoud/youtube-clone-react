@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ChannelCards from "../components/ChannelCards";
 import Video from "../components/Video";
 import { fetchFromAPI } from "./../utils/fetchFromAPI";
 export default function ChannelDetail() {
@@ -10,14 +11,8 @@ export default function ChannelDetail() {
     const fetchResults = async () => {
       const data = await fetchFromAPI(`channels?part=snippet&id=${id}`);
       console.log(data);
-      let res = data?.items[0];
-      setChannelDetail({
-        id: {
-          kind: res.kind,
-          id: res.kind,
-        },
-        snippet: res.snippet,
-      });
+
+      setChannelDetail(data?.items[0]);
 
       const videosData = await fetchFromAPI(
         `search?channelId=${id}&part=snippet%2Cid&order=date`
@@ -29,14 +24,21 @@ export default function ChannelDetail() {
     fetchResults();
   }, [id]);
   return (
-    <div>
+    <div className="bg-black h-screen overflow-auto">
       <img
         src="https://source.unsplash.com/1600x900/?nature,photography,technology"
         className="w-full h-[300px] object-cover"
         alt="cover"
       />
-      {channelDetail && <Video item={channelDetail} />}
-      <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+      {channelDetail && (
+        <ChannelCards
+          url={channelDetail?.snippet?.thumbnails?.high?.url}
+          channelId={channelDetail?.id}
+          title={channelDetail?.snippet?.title}
+          styles="-mt-16 mx-auto"
+        />
+      )}
+      <div className="flex flex-wrap gap-3 justify-center md:justify-start mx-auto  ">
         {videos?.map((item, index) => (
           <Video item={item} key={index} />
         ))}
