@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import {
   demoThumbnailUrl,
   demoVideoTitle,
@@ -8,6 +9,7 @@ import {
   demoChannelUrl,
   demoProfilePicture,
 } from "./../utils/constants";
+import ChannelCards from "./ChannelCards";
 export default function Video({ item }) {
   return (
     <div className="w-[250px] min-h-[250px]   rounded-lg cursor-pointer">
@@ -31,19 +33,11 @@ export default function Video({ item }) {
           </div>
         </Link>
       ) : (
-        <Link
-          to={`/channel/${item.id.channelId || demoChannelUrl}`}
-          className="w-full h-full flex items-center justify-center gap-2 flex-col"
-        >
-          <img
-            src={item.snippet.thumbnails.high.url || demoProfilePicture}
-            alt="channel"
-            className="w-[180px] h-[180px] rounded-full object-cover"
-          />
-          <h6 className="text-gray-400 font-semibold">
-            {item.snippet.title || demoChannelTitle}
-          </h6>
-        </Link>
+        <ChannelCards
+          channelId={item.id.channelId}
+          title={item.snippet.title}
+          url={item.snippet.thumbnails.high.url}
+        />
       )}
     </div>
   );
