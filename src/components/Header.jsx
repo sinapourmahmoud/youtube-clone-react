@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import { logo } from "./../utils/constants";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { mainContext } from "../contexts/mainContext";
 export default function Header() {
   let navigate = useNavigate();
+
   let { setActiveLink } = useContext(mainContext);
   let [search, setSearch] = useState("");
   return (
@@ -13,11 +14,11 @@ export default function Header() {
       <img
         src={logo}
         alt="logo"
-        className="w-[50px] object-contain mt-2 hidden md:block"
+        className={`w-[50px] object-contain mt-2 hidden md:block`}
       />
       <span
         onClick={() => setActiveLink((prev) => !prev)}
-        className="md:hidden"
+        className={`md:hidden`}
       >
         <MenuIcon className="text-white cursor-pointer  " />
       </span>
