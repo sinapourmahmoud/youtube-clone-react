@@ -13,14 +13,12 @@ export default function ChannelDetail() {
     const fetchResults = async () => {
       setLoader(true);
       const data = await fetchFromAPI(`channels?part=snippet&id=${id}`);
-      console.log(data);
 
       setChannelDetail(data?.items[0]);
 
       const videosData = await fetchFromAPI(
         `search?channelId=${id}&part=snippet%2Cid&order=date`
       );
-      console.log(videosData?.items);
       setVideos(videosData?.items);
       setLoader(false);
     };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -11,6 +11,30 @@ import {
 } from "./../utils/constants";
 import ChannelCards from "./ChannelCards";
 export default function Video({ item }) {
+  const handleTime = (publishedTime) => {
+    let timeNow = Date.parse(new Date());
+    let howLong = timeNow - publishedTime;
+    let byMounth = parseInt(howLong / 1000 / 60 / 60 / 24 / 30);
+    let byDays = parseInt(howLong / 1000 / 60 / 60 / 24);
+    let byHoures = parseInt(howLong / 1000 / 60 / 60);
+    let byMinutes = parseInt(howLong / 1000 / 60);
+    if (byMounth == 0) {
+      if (byDays == 0) {
+        if (byHoures == 0) {
+          if (byMinutes == 0) {
+            return "A few moment ago";
+          } else {
+            return `${byMinutes} minutes ago`;
+          }
+        } else {
+          return `${byHoures} hourse ago`;
+        }
+      } else {
+        return `${byDays} days ago`;
+      }
+    }
+    return `${byMounth} mounths ago`;
+  };
   return (
     <div className="w-[250px] min-h-[250px]   rounded-lg cursor-pointer">
       {item.id.kind == "youtube#video" ? (
@@ -29,6 +53,9 @@ export default function Video({ item }) {
             </p>
             <p className="text-gray-400 font-semibold">
               {item.snippet.channelTitle || demoChannelTitle}
+            </p>
+            <p className="text-gray-400 font-medium text-sm">
+              {handleTime(Date.parse(item.snippet.publishedAt))}
             </p>
           </div>
         </Link>

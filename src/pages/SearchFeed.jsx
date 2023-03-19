@@ -11,12 +11,11 @@ export default function SearchFeed() {
     setLoader(true);
     fetchFromAPI(`search?part=snippet&q=${id}`)
       .then((res) => {
-        console.log(res.items);
         setVideos(res?.items);
         setLoader(false);
       })
       .catch((err) => {
-        console.log(err.message);
+        alert(err.message);
       });
   }, [id]);
   if (loader) return <Loader />;

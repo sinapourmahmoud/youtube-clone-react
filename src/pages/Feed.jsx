@@ -13,12 +13,11 @@ export default function Feed() {
     setLoader(true);
     fetchFromAPI(`search?part=snippet&q=${category}`)
       .then((res) => {
-        console.log(res.items);
         setVideos(res?.items);
         setLoader(false);
       })
       .catch((err) => {
-        console.log(err.message);
+        alert(err.message);
       });
   }, [category]);
   if (loader) return <Loader />;
