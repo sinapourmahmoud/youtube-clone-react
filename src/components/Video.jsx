@@ -32,7 +32,7 @@ export default function Video({ item }) {
         </Link>
       ) : (
         <Link
-          to={`/search/${item.id.channelId || demoChannelUrl}`}
+          to={`/channel/${item.id.channelId || demoChannelUrl}`}
           className="w-full h-full flex items-center justify-center gap-2 flex-col"
         >
           <img
