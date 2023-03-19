@@ -36,7 +36,7 @@ export default function Video({ item }) {
     return `${byMounth} mounths ago`;
   };
   return (
-    <div className="w-[250px] min-h-[250px]   rounded-lg cursor-pointer">
+    <div className="sm:w-[250px] w-[60%] min-h-[250px]   rounded-lg cursor-pointer">
       {item.id.kind == "youtube#video" ? (
         <Link
           className="w-full h-full flex flex-col rounded-lg bg-[#1E1E1E]"
