@@ -5,6 +5,7 @@ import { Typography, Box, Stack } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { fetchFromAPI } from "../utils/fetchFromAPI";
+import Video from "../components/Video";
 export default function VideoDetail() {
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
@@ -24,9 +25,9 @@ export default function VideoDetail() {
     );
   }, [id]);
   return (
-    <div className="w-full h-screen overflow-auto flex flex-col md:flex-row">
-      <div className="flex-1 p-3 relative md:sticky flex flex-col gap-5 ">
-        <div className="w-full  top-[86px] flex flex-col">
+    <div className="w-full h-screen overflow-auto flex flex-col md:flex-row gap-5">
+      <div className="flex-1 p-3 relative md:sticky flex flex-col gap-5 md:top-[0]">
+        <div className="w-full   flex flex-col">
           <ReactPlayer
             className="react-player"
             controls
@@ -50,6 +51,11 @@ export default function VideoDetail() {
             Views : {videoDetail?.statistics?.viewCount}
           </p>
         </div>
+      </div>
+      <div className="flex flex-wrap gap-3 md:w-[300px] justify-center">
+        {videos?.map((item, index) => (
+          <Video key={index} item={item} />
+        ))}
       </div>
     </div>
   );
