@@ -1,5 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import ReactPlayer from "react-player";
+import { Typography, Box, Stack } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
+import { fetchFromAPI } from "../utils/fetchFromAPI";
 export default function VideoDetail() {
-  return <div>VideoDetail</div>;
+  const [videoDetail, setVideoDetail] = useState(null);
+  const [videos, setVideos] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetchFromAPI(`videos?part=snippet,statistics&id=${id}`).then((data) => {
+      setVideoDetail(data.items[0]);
+      console.log(data.items[0]);
+    });
+
+    fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`).then(
+      (data) => {
+        console.log(data.items);
+        setVideos(data.items);
+      }
+    );
+  }, [id]);
+  return (
+    <div className="w-full h-screen overflow-auto flex flex-col md:flex-row">
+      <div className="flex-1 p-3 relative md:sticky flex flex-col gap-5 ">
+        <div className="w-full  top-[86px] flex flex-col">
+          <ReactPlayer
+            className="react-player"
+            controls
+            url={`https://www.youtube.com/watch?v=${id}`}
+          />
+        </div>
+        <p className="text-gray-400 font-bold text-xl">
+          {videoDetail?.snippet?.title}
+        </p>
+        <div className="flex items-center gap-3">
+          <Link
+            className="text-gray-400 font-semibold flex-1"
+            to={`/channel/${videoDetail?.snippet?.channelId}`}
+          >
+            {videoDetail?.snippet?.channelTitle}
+          </Link>
+          <p className="text-gray-400 font-medium text-sm">
+            Likes : {videoDetail?.statistics?.likeCount}
+          </p>
+          <p className="text-gray-400 font-medium text-sm">
+            Views : {videoDetail?.statistics?.viewCount}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
