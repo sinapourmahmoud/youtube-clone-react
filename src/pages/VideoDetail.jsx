@@ -6,24 +6,27 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { fetchFromAPI } from "../utils/fetchFromAPI";
 import Video from "../components/Video";
+import Loader from "../components/Loader";
 export default function VideoDetail() {
+  const [loader, setLoader] = useState(false);
   const [videoDetail, setVideoDetail] = useState(null);
   const [videos, setVideos] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
+    setLoader(true);
     fetchFromAPI(`videos?part=snippet,statistics&id=${id}`).then((data) => {
       setVideoDetail(data.items[0]);
-      console.log(data.items[0]);
+      setLoader(false);
     });
 
     fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`).then(
       (data) => {
-        console.log(data.items);
         setVideos(data.items);
       }
     );
   }, [id]);
+  if (loader) return <Loader />;
   return (
     <div className="w-full h-screen overflow-auto flex flex-col md:flex-row gap-5">
       <div className="flex-1 p-3 relative md:sticky flex flex-col gap-5 md:top-[0]">

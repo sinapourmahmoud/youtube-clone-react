@@ -2,21 +2,27 @@ import React, { useContext, useEffect, useState } from "react";
 import { mainContext } from "../contexts/mainContext";
 import Sidebar from "./../components/Sidebar";
 import { fetchFromAPI } from "./../utils/fetchFromAPI";
+import Loader from "../components/Loader";
 import Video from "./../components/Video";
 export default function Feed() {
   let { category } = useContext(mainContext);
+  let [loader, setLoader] = useState(false);
   let [videos, setVideos] = useState([]);
+  let { activeLink } = useContext(mainContext);
   useEffect(() => {
+    setLoader(true);
     fetchFromAPI(`search?part=snippet&q=${category}`)
       .then((res) => {
         console.log(res.items);
         setVideos(res?.items);
+        setLoader(false);
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, [category]);
-  let { activeLink, setActiveLink } = useContext(mainContext);
+  if (loader) return <Loader />;
+
   return (
     <div className="relative flex">
       <div
