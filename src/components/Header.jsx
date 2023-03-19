@@ -22,7 +22,8 @@ export default function Header() {
         <MenuIcon className="text-white cursor-pointer  " />
       </span>
       <form
-        onSubmit={() => {
+        onSubmit={(e) => {
+          e.preventDefault();
           navigate(`/search/${search}`);
         }}
       >
